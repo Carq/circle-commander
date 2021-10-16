@@ -1,0 +1,48 @@
+body {
+  background-color: lightblue;
+}
+
+.control-panel {
+  display: flex;
+  gap: 10px;
+}
+
+.control-panel-button {
+  height: 80px;
+  width: 120px;
+  border: none;
+  font-family: "Lato";
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  background: #3498db;
+  color: #fff;
+}
+
+.control-panel-button:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.control-panel-button:hover {
+  background: #2980b9;
+}
+
+.control-panel-button:active {
+  background: #2980b9;
+  top: 2px;
+}

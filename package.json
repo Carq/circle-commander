@@ -1,0 +1,22 @@
+{
+  "name": "circle-commander",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Carq/circle-commander.git"
+  },
+  "author": "Carq",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Carq/circle-commander/issues"
+  },
+  "homepage": "https://github.com/Carq/circle-commander#readme",
+  "devDependencies": {
+    "electron": "^15.1.1"
+  }
+}
