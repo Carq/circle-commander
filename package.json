@@ -4,7 +4,8 @@
   "description": "",
   "main": "app/main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "webpack --config app/webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,11 @@
   },
   "homepage": "https://github.com/Carq/circle-commander#readme",
   "devDependencies": {
-    "electron": "^15.1.1"
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "babel-loader": "^8.2.2",
+    "electron": "^15.1.1",
+    "webpack": "^5.58.2",
+    "webpack-cli": "^4.9.0"
   }
 }

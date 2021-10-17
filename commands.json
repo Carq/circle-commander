@@ -1,0 +1,17 @@
+{
+    "bats":
+    [
+        {
+            "name": "Rainmeter",
+            "path": "rainmeter.bat"
+        },
+        {
+            "name": "VPN ON",
+            "path": "vpn-on.bat"
+        },
+        {
+            "name": "VPN OFF",
+            "path": "vpn-off.bat"
+        }
+    ]
+}
