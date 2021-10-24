@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <link rel="stylesheet" href="styles/main.css">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
     <title>Circle Commander</title>
   </head>
   <body>
-    <div class="control-panel">
-      <button id="button-01" class="control-panel-button">Rainmeter</button>
-      <button id="button-02" class="control-panel-button">VPN On</button>
-      <button id="button-03" class="control-panel-button">VPN Off</button>
-      <button id="button-exit" class="control-panel-button">Exit</button>
-
+    <div id="bat-panel" class="bat-panel">
+      <div id="bat-panel-buttons" class="bat-panel-buttons"></div>
+      <div class="bat-panel-buttons">
+        <button id="button-load-config" class="bat-panel-button">
+          Reload config
+        </button>
+        <button id="button-exit" class="bat-panel-button">Exit</button>
+      </div>
     </div>
     <script src="build/renderer.js"></script>
-
   </body>
 </html>

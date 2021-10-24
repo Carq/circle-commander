@@ -1,5 +1,5 @@
 const events = {
-  COMMANDS_HAVE_BEEN_LOADED: "commandsHaveBeenLoaded",
+  BATS_CONFIGURATION_HAS_BEEN_LOADED: "batsConfigurationHasBeenLoaded",
 };
 
 module.exports = events;

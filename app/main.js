@@ -20,15 +20,15 @@ function createWindow() {
   });
 
   mainWindow.loadFile("app/index.html");
-  mainWindow.webContents.openDevTools();
-  mainWindow.webContents.once("dom-ready", () => {
-    loadCommands();
-  });
+  // mainWindow.webContents.openDevTools();
 }
 
-function loadCommands() {
-  let commands = JSON.parse(fs.readFileSync("commands.json", "utf8"));
-  mainWindow.webContents.send(events.COMMANDS_HAVE_BEEN_LOADED, commands);
+function loadBatsConfiguration() {
+  let commands = JSON.parse(fs.readFileSync("batsConfiguration.json", "utf8"));
+  mainWindow.webContents.send(
+    events.BATS_CONFIGURATION_HAS_BEEN_LOADED,
+    commands
+  );
 }
 
 app.whenReady().then(() => {
@@ -36,11 +36,16 @@ app.whenReady().then(() => {
 });
 
 ipcMain.on(commands.CLOSE_APP, (evt, arg) => {
-  console.log(`Exeucute Command ${commands.CLOSE_APP}`);
+  console.log(`Exeucute Command ${commands.CLOSE_APP}.`);
   app.quit();
 });
 
 ipcMain.on(commands.RUN_BAT, (evt, arg) => {
   console.log(`Exeucute Command ${commands.RUN_BAT} with param: ${arg}`);
   runBat(arg);
+});
+
+ipcMain.on(commands.LOAD_CONFIGURATION, (evt, arg) => {
+  console.log(`Exeucute Command ${commands.LOAD_CONFIGURATION}.`);
+  loadBatsConfiguration();
 });

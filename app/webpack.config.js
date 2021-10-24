@@ -17,10 +17,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        include: [
-          path.resolve(__dirname, "renderer"),
-          path.resolve(__dirname, "main", "events.js"),
-        ],
+        include: [path.resolve(__dirname, "renderer")],
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",

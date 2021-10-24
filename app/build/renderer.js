@@ -10,6 +10,7 @@
 const commands = {
   RUN_BAT: "runBat",
   CLOSE_APP: "closeApp",
+  LOAD_CONFIGURATION: "loadConfiguration",
 };
 
 module.exports = commands;
@@ -24,15 +25,17 @@ module.exports = commands;
 /***/ ((module) => {
 
 const events = {
-  COMMANDS_HAVE_BEEN_LOADED: "commandsHaveBeenLoaded"
+  BATS_CONFIGURATION_HAS_BEEN_LOADED: "batsConfigurationHasBeenLoaded",
 };
+
 module.exports = events;
+
 
 /***/ }),
 
-/***/ "./app/renderer/commands/index.js":
+/***/ "./app/renderer/batPanel/index.js":
 /*!****************************************!*\
-  !*** ./app/renderer/commands/index.js ***!
+  !*** ./app/renderer/batPanel/index.js ***!
   \****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -42,11 +45,25 @@ const {
 
 const commands = __webpack_require__(/*! ../../main/commands */ "./app/main/commands.js");
 
-function bindCommandsToView() {
-  document.getElementById("button-01").addEventListener("click", () => commandRunBat("rainmeter.bat"));
-  document.getElementById("button-02").addEventListener("click", () => commandRunBat("vpn-on.bat"));
-  document.getElementById("button-03").addEventListener("click", () => commandRunBat("vpn-off.bat"));
+function createBatPanelView(batsConfiguration) {
+  const batPanel = document.getElementById("bat-panel-buttons");
+  batPanel.innerHTML = null;
   document.getElementById("button-exit").addEventListener("click", () => commandCloseApp());
+  document.getElementById("button-load-config").addEventListener("click", () => commandLoadConfig());
+  batsConfiguration.forEach(batConfig => {
+    let button = createButton(batConfig.name, batConfig.path);
+    batPanel.appendChild(button);
+  });
+}
+
+function createButton(buttonName, batFileName) {
+  let button = document.createElement("button");
+  button.innerHTML = buttonName;
+  button.classList.add("bat-panel-button");
+
+  button.onclick = () => commandRunBat(batFileName);
+
+  return button;
 }
 
 function commandRunBat(batFileName) {
@@ -57,8 +74,12 @@ function commandCloseApp() {
   ipcRenderer.send(commands.CLOSE_APP);
 }
 
+function commandLoadConfig() {
+  ipcRenderer.send(commands.LOAD_CONFIGURATION);
+}
+
 module.exports = {
-  bindCommandsToView
+  createBatPanelView
 };
 
 /***/ }),
@@ -75,10 +96,14 @@ const {
 
 const events = __webpack_require__(/*! ../main/events */ "./app/main/events.js");
 
+const {
+  createBatPanelView
+} = __webpack_require__(/*! ./batPanel */ "./app/renderer/batPanel/index.js");
+
 function registerEventHandlers() {
   console.log("Register event handlers");
-  ipcRenderer.on(events.COMMANDS_HAVE_BEEN_LOADED, (event, data) => {
-    console.log(data);
+  ipcRenderer.on(events.BATS_CONFIGURATION_HAS_BEEN_LOADED, (event, data) => {
+    createBatPanelView(data.bats);
   });
 }
 
@@ -131,12 +156,14 @@ var __webpack_exports__ = {};
   !*** ./app/renderer/index.js ***!
   \*******************************/
 const {
-  bindCommandsToView
-} = __webpack_require__(/*! ./commands/index */ "./app/renderer/commands/index.js");
+  ipcRenderer
+} = __webpack_require__(/*! electron */ "electron");
 
 const registerEventHandlers = __webpack_require__(/*! ./eventHandlers */ "./app/renderer/eventHandlers.js");
 
-bindCommandsToView();
+const commands = __webpack_require__(/*! ../main/commands */ "./app/main/commands.js");
+
+ipcRenderer.send(commands.LOAD_CONFIGURATION);
 registerEventHandlers();
 })();
 

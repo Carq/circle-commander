@@ -1,5 +1,7 @@
-const { bindCommandsToView } = require("./commands/index");
-const registerEventHandlers = require("./eventHandlers");
+const { ipcRenderer } = require("electron");
 
-bindCommandsToView();
+const registerEventHandlers = require("./eventHandlers");
+const commands = require("../main/commands");
+
+ipcRenderer.send(commands.LOAD_CONFIGURATION);
 registerEventHandlers();

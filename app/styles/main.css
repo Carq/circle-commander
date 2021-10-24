@@ -2,12 +2,18 @@ body {
   background-color: lightblue;
 }
 
-.control-panel {
+.bat-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bat-panel-buttons {
   display: flex;
   gap: 10px;
 }
 
-.control-panel-button {
+.bat-panel-button {
   height: 80px;
   width: 120px;
   border: none;
@@ -29,7 +35,7 @@ body {
   color: #fff;
 }
 
-.control-panel-button:after {
+.bat-panel-button:after {
   content: "";
   position: absolute;
   z-index: -1;
@@ -38,11 +44,11 @@ body {
   transition: all 0.3s;
 }
 
-.control-panel-button:hover {
+.bat-panel-button:hover {
   background: #2980b9;
 }
 
-.control-panel-button:active {
+.bat-panel-button:active {
   background: #2980b9;
   top: 2px;
 }
