@@ -1,8 +1,12 @@
 const { ipcRenderer } = require("electron");
 
-const { events } = require("../main/events");
+const events = require("../main/events");
 
-ipcRenderer.on(events.commandsHasBeenLoaded, (event, data) => {
-  console.log(event);
-  console.log(data);
-});
+function registerEventHandlers() {
+  console.log("Register event handlers");
+  ipcRenderer.on(events.COMMANDS_HAVE_BEEN_LOADED, (event, data) => {
+    console.log(data);
+  });
+}
+
+module.exports = registerEventHandlers;

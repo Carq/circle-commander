@@ -5,7 +5,8 @@
   "main": "app/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "webpack --config app/webpack.config.js"
+    "build": "webpack --config app/webpack.config.js",
+    "build-watch": "webpack --config app/webpack.config.js --watch"
   },
   "repository": {
     "type": "git",

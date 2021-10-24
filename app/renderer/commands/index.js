@@ -1,40 +1,32 @@
-const { spawn } = require("child_process");
 const { ipcRenderer } = require("electron");
+const commands = require("../../main/commands");
 
 function bindCommandsToView() {
   document
     .getElementById("button-01")
-    .addEventListener("click", () => runBat("rainmeter.bat"));
+    .addEventListener("click", () => commandRunBat("rainmeter.bat"));
 
   document
     .getElementById("button-02")
-    .addEventListener("click", () => runBat("vpn-on.bat"));
+    .addEventListener("click", () => commandRunBat("vpn-on.bat"));
 
   document
     .getElementById("button-03")
-    .addEventListener("click", () => runBat("vpn-off.bat"));
+    .addEventListener("click", () => commandRunBat("vpn-off.bat"));
 
   document
     .getElementById("button-exit")
-    .addEventListener("click", () => closeApp());
+    .addEventListener("click", () => commandCloseApp());
 }
 
-function runBat(batFile) {
-  const command = spawn(process.cwd() + "/app/bats/" + batFile, [], {
-    shell: true,
-  });
-
-  command.on("error", (err) => {
-    console.error(err);
-  });
-
-  command.stdout.on("data", (data) => {
-    console.log(`Commount output: ${data}`);
-  });
+function commandRunBat(batFileName) {
+  ipcRenderer.send(commands.RUN_BAT, batFileName);
 }
 
-function closeApp() {
-  ipcRenderer.send("close-app");
+function commandCloseApp() {
+  ipcRenderer.send(commands.CLOSE_APP);
 }
 
-module.exports = bindCommandsToView;
+module.exports = {
+  bindCommandsToView,
+};

@@ -3,6 +3,8 @@ const fs = require("fs");
 
 let mainWindow;
 const events = require("../app/main/events");
+const commands = require("../app/main/commands");
+const { runBat } = require("./main/batRunner");
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -18,6 +20,10 @@ function createWindow() {
   });
 
   mainWindow.loadFile("app/index.html");
+  mainWindow.webContents.openDevTools();
+  mainWindow.webContents.once("dom-ready", () => {
+    loadCommands();
+  });
 }
 
 function loadCommands() {
@@ -27,9 +33,14 @@ function loadCommands() {
 
 app.whenReady().then(() => {
   createWindow();
-  loadCommands();
 });
 
-ipcMain.on("close-app", (evt, arg) => {
+ipcMain.on(commands.CLOSE_APP, (evt, arg) => {
+  console.log(`Exeucute Command ${commands.CLOSE_APP}`);
   app.quit();
+});
+
+ipcMain.on(commands.RUN_BAT, (evt, arg) => {
+  console.log(`Exeucute Command ${commands.RUN_BAT} with param: ${arg}`);
+  runBat(arg);
 });
