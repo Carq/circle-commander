@@ -6,11 +6,14 @@ const events = require("../app/main/events");
 const commands = require("../app/main/commands");
 const { runBat } = require("./main/batRunner");
 
+const isDevelopment = process.env.NODE_ENV.trim() === "development";
+
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: isDevelopment ? 1200 : 800,
     height: 600,
     frame: false,
+    transparent: true,
     maximizable: false,
     minimizable: false,
     webPreferences: {
@@ -20,7 +23,10 @@ function createWindow() {
   });
 
   mainWindow.loadFile("app/index.html");
-  // mainWindow.webContents.openDevTools();
+  if (isDevelopment) {
+    console.warn("App has been started in development mode");
+    // mainWindow.webContents.openDevTools();
+  }
 }
 
 function loadBatsConfiguration() {

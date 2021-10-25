@@ -4,9 +4,9 @@
   "description": "",
   "main": "app/main.js",
   "scripts": {
-    "start": "electron .",
-    "build": "webpack --config app/webpack.config.js",
-    "build-watch": "webpack --config app/webpack.config.js --watch"
+    "start": "set NODE_ENV=development && electron . ",
+    "build-dev": "set NODE_ENV=development && webpack --config app/webpack.config.js ",
+    "build-dev-watch": "set NODE_ENV=development && webpack --config app/webpack.config.js --watch"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,13 @@
+{
+    "bats":
+    [
+        {
+            "name": "Rainmeter ON",
+            "path": "rainmeter-on.bat"
+        },
+        {
+            "name": "Rainmeter OFF",
+            "path": "rainmeter-off.bat"
+        }
+    ]
+}
