@@ -10,8 +10,9 @@ const isDevelopment = process.env.NODE_ENV.trim() === "development";
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: isDevelopment ? 1200 : 500,
-    height: 500,
+    width: isDevelopment ? 1200 : 400,
+    height: 400,
+    icon: __dirname + "./img/circle.png",
     frame: false,
     transparent: true,
     maximizable: false,
