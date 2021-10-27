@@ -10,8 +10,8 @@ const isDevelopment = process.env.NODE_ENV.trim() === "development";
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: isDevelopment ? 1200 : 800,
-    height: 600,
+    width: isDevelopment ? 1200 : 500,
+    height: 500,
     frame: false,
     transparent: true,
     maximizable: false,
@@ -25,7 +25,7 @@ function createWindow() {
   mainWindow.loadFile("app/index.html");
   if (isDevelopment) {
     console.warn("App has been started in development mode");
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
   }
 }
 

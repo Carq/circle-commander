@@ -2,10 +2,17 @@
     "bats":
     [
         {
+            "icon": "laptop-code",
+            "name": "Circle Development",
+            "path": "circle-commander-development.bat"
+        },
+        {
+            "icon": "thermometer-full",
             "name": "Rainmeter ON",
             "path": "rainmeter-on.bat"
         },
         {
+            "icon": "thermometer-empty",
             "name": "Rainmeter OFF",
             "path": "rainmeter-off.bat"
         }

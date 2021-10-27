@@ -47,19 +47,23 @@ const commands = __webpack_require__(/*! ../../main/commands */ "./app/main/comm
 
 function createBatPanelView(batsConfiguration) {
   const batPanel = document.getElementById("bat-panel-buttons");
-  batPanel.innerHTML = null;
   document.getElementById("button-exit").addEventListener("click", () => commandCloseApp());
   document.getElementById("button-load-config").addEventListener("click", () => commandLoadConfig());
+  document.getElementById("circularMainButton").addEventListener("click", () => document.getElementById("circularMenu1").classList.toggle("active"));
   batsConfiguration.forEach(batConfig => {
-    let button = createButton(batConfig.name, batConfig.path);
-    batPanel.appendChild(button);
+    let button = createButton(batConfig.name, batConfig.icon, batConfig.path);
+    batPanel.prepend(button);
   });
 }
 
-function createButton(buttonName, batFileName) {
+function createButton(buttonName, icon, batFileName) {
   let button = document.createElement("button");
-  button.innerHTML = buttonName;
-  button.classList.add("bat-panel-button");
+  let buttonText = document.createElement("div");
+  buttonText.classList.add(`fas`);
+  buttonText.classList.add(`fa-${icon}`);
+  buttonText.classList.add("button-text");
+  button.appendChild(buttonText);
+  button.classList.add("menu-item");
 
   button.onclick = () => commandRunBat(batFileName);
 
