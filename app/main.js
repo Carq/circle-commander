@@ -1,4 +1,10 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  globalShortcut,
+  screen,
+} = require("electron");
 const fs = require("fs");
 
 let mainWindow;
@@ -8,38 +14,9 @@ const { runBat } = require("./main/batRunner");
 
 const isDevelopment = process.env.NODE_ENV.trim() === "development";
 
-function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: isDevelopment ? 1200 : 400,
-    height: 400,
-    icon: __dirname + "./img/circle.png",
-    frame: false,
-    transparent: true,
-    maximizable: false,
-    minimizable: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-    },
-  });
-
-  mainWindow.loadFile("app/index.html");
-  if (isDevelopment) {
-    console.warn("App has been started in development mode");
-    mainWindow.webContents.openDevTools();
-  }
-}
-
-function loadBatsConfiguration() {
-  let commands = JSON.parse(fs.readFileSync("batsConfiguration.json", "utf8"));
-  mainWindow.webContents.send(
-    events.BATS_CONFIGURATION_HAS_BEEN_LOADED,
-    commands
-  );
-}
-
 app.whenReady().then(() => {
   createWindow();
+  registerGlobalShortcut();
 });
 
 ipcMain.on(commands.CLOSE_APP, (evt, arg) => {
@@ -56,3 +33,57 @@ ipcMain.on(commands.LOAD_CONFIGURATION, (evt, arg) => {
   console.log(`Exeucute Command ${commands.LOAD_CONFIGURATION}.`);
   loadBatsConfiguration();
 });
+
+function createWindow() {
+  mainWindow = new BrowserWindow({
+    width: 360,
+    height: 360,
+    icon: __dirname + "./img/circle.png",
+    frame: false,
+    transparent: true,
+    maximizable: false,
+    minimizable: false,
+    skipTaskbar: true,
+    show: false,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+
+  mainWindow.loadFile("app/index.html");
+  mainWindow.on("blur", (e) => {
+    mainWindow.hide();
+  });
+  if (isDevelopment) {
+    console.warn("App has been started in development mode");
+  }
+}
+
+function registerGlobalShortcut() {
+  globalShortcut.register("CommandOrControl+Space", () => {
+    if (mainWindow.isVisible()) {
+      mainWindow.hide();
+    } else {
+      showWindowAtMousePosition();
+    }
+  });
+}
+
+function showWindowAtMousePosition() {
+  let mousePosition = screen.getCursorScreenPoint();
+  windowsSize = mainWindow.getSize();
+  mainWindow.setPosition(
+    mousePosition.x - windowsSize[0] / 2,
+    mousePosition.y - windowsSize[0] / 2
+  );
+  mainWindow.show();
+}
+
+function loadBatsConfiguration() {
+  let commands = JSON.parse(fs.readFileSync("batsConfiguration.json", "utf8"));
+  mainWindow.webContents.send(
+    events.BATS_CONFIGURATION_HAS_BEEN_LOADED,
+    commands
+  );
+}
