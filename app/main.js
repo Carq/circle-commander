@@ -34,6 +34,10 @@ ipcMain.on(commands.LOAD_CONFIGURATION, (evt, arg) => {
   loadBatsConfiguration();
 });
 
+ipcMain.on(commands.CLOSE_COMMANDER_END, (evt, arg) => {
+  mainWindow.hide();
+});
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 360,
@@ -53,8 +57,9 @@ function createWindow() {
 
   mainWindow.loadFile("app/index.html");
   mainWindow.on("blur", (e) => {
-    mainWindow.hide();
+    closeCommanderMenuRequest();
   });
+
   if (isDevelopment) {
     console.warn("App has been started in development mode");
   }
@@ -63,7 +68,7 @@ function createWindow() {
 function registerGlobalShortcut() {
   globalShortcut.register("CommandOrControl+Space", () => {
     if (mainWindow.isVisible()) {
-      mainWindow.hide();
+      closeCommanderMenuRequest();
     } else {
       showWindowAtMousePosition();
     }
@@ -78,6 +83,7 @@ function showWindowAtMousePosition() {
     mousePosition.y - windowsSize[0] / 2
   );
   mainWindow.show();
+  mainWindow.webContents.send(commands.OPEN_COMMANDER);
 }
 
 function loadBatsConfiguration() {
@@ -86,4 +92,8 @@ function loadBatsConfiguration() {
     events.BATS_CONFIGURATION_HAS_BEEN_LOADED,
     commands
   );
+}
+
+function closeCommanderMenuRequest() {
+  mainWindow.webContents.send(commands.CLOSE_COMMANDER_START);
 }

@@ -1,6 +1,7 @@
 const { ipcRenderer } = require("electron");
 
 const events = require("../main/events");
+
 const { createBatPanelView } = require("./batPanel");
 
 function registerEventHandlers() {
